@@ -36,6 +36,8 @@ function reducer(state, action) {
 export default function App() {
   const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
 
+  const numQuestions = questions.length;
+
   useEffect(function () {
     async function getQuestion() {
       try {
@@ -56,7 +58,9 @@ export default function App() {
       <Main>
         {status === 'loading' && <Loader />}
         {status === 'error' && <Error />}
-        {status === 'ready' && <StartScreen />}
+        {status === 'ready' && <StartScreen
+          numQuestions={numQuestions}
+        />}
 
       </Main>
     </div>
