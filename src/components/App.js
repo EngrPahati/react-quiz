@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+// import { useEffect, useReducer } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Loader from "./Loader";
@@ -91,24 +91,12 @@ import { useQuiz } from "../contexts/QuizContext";
 
 export default function App() {
   // const [{ questions, status, index, answer, points, highscore, secondsRemaining}, dispatch] = useReducer(reducer, initialState);
-  const { status, dispatch } = useQuiz();
+  const { status } = useQuiz();
 
   // const numQuestions = questions.length;
   // const maxPossiblePoints = questions.reduce((prev, cur) => prev + cur.points, 0);
 
-  useEffect(function () {
-    async function getQuestion() {
-      try {
-        const res = await fetch('http://localhost:9000/questions');
-        const data = await res.json();
-        dispatch({ type: 'dataReceived', payload: data });
-      } catch (err) {
-        dispatch({ type: "dataFailed" });
-        console.log('nasalo ng catch ung error');
-      }
-    }
-    getQuestion();
-  }, []);
+
 
   return (
     <div className="app">

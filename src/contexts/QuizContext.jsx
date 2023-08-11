@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 
 const QuizContext = createContext();
 
@@ -91,6 +91,22 @@ function QuizProvider({ children }) {
     (prev, cur) => prev + cur.points,
     0
   );
+
+  useEffect(function () {
+    async function getQuestion() {
+      try {
+        const res = await fetch("http://localhost:9000/questions");
+        const data = await res.json();
+        console.log(data);
+        dispatch({ type: "dataReceived", payload: data });
+      } catch (err) {
+        dispatch({ type: "dataFailed" });
+        console.log("nasalo ng catch ung error");
+      }
+    }
+    getQuestion();
+  }, []);
+
   return (
     <QuizContext.Provider
       value={{
